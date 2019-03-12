@@ -80,6 +80,28 @@ app.get("/scrape", function(req, res) {
   });
 });
 
+app.get("/saved", function(req, res) {
+  db.Saved.find({})
+    .then(function(dbSaved) {
+      res.json(dbSaved)
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    })
+});
+
+app.post("/saved", function(req, res) {
+  db.Saved.create(req.body)
+    .then(function(dbSaved) {
+      res.json(dbSaved)
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection

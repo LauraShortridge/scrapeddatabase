@@ -1,6 +1,6 @@
 // Grab the articles as a json
 
-$.getJSON("/articles", function(data) {
+$.getJSON("/articles", function (data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
@@ -10,32 +10,49 @@ $.getJSON("/articles", function(data) {
   }
 });
 
-$("#scrapebutton").on("click", function() {
+$("#scrapebutton").on("click", function () {
   console.log("I have been clicked");
   $.ajax({
     method: "GET",
     url: "/scrape"
   })
-    .then(function(result) {
+    .then(function (result) {
       console.log(result);
       location.reload();
     })
 });
 
-$("#articlecard").on("click", ".btn-primary", function() {
-  var image = $(this).parents("#articleimage").children("img").attr("src"); 
-  var title = $(this).parents(".card-body").children("p").text();
-  var link = $(this).parents(".card-body").children("a").attr("href");
-  var id = $(this).parents(".card-body").children("p").attr("data-id");
-  console.log("Save article has been clicked.");
-  console.log(image, "image");
-  console.log(title, "title");
-  console.log(link, "link");
-  console.log(id, "id");
-})
+$("#articlecard").on("click", ".btn-primary", function () {
+  $.ajax({
+    method: "POST",
+    url: "/saved",
+    data: {
+      image: $(this).parents("#articleimage").children("img").attr("src"),
+      title: $(this).parents(".card-body").children("p").text(),
+      link: $(this).parents(".card-body").children("a").attr("href"),
+      id: $(this).parents(".card-body").children("p").attr("data-id")
+    }
+  })
+  .then(function (data) {
+    // Log the response
+    console.log(data);
+    // Empty the notes section
+    $("#notes").empty();
+  });
+
+  // var image = $(this).parents("#articleimage").children("img").attr("src");
+  // var title = $(this).parents(".card-body").children("p").text();
+  // var link = $(this).parents(".card-body").children("a").attr("href");
+  // var id = $(this).parents(".card-body").children("p").attr("data-id");
+  // console.log("Save article has been clicked.");
+  // console.log(image, "image");
+  // console.log(title, "title");
+  // console.log(link, "link");
+  // console.log(id, "id");
+});
 
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+$(document).on("click", "p", function () {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
@@ -47,7 +64,7 @@ $(document).on("click", "p", function() {
     url: "/articles/" + thisId
   })
     // With that done, add the note information to the page
-    .then(function(data) {
+    .then(function (data) {
       console.log(data);
       // The title of the article
       $("#notes").append("<h2>" + data.title + "</h2>");
@@ -69,7 +86,7 @@ $(document).on("click", "p", function() {
 });
 
 // When you click the savenote button
-$(document).on("click", "#savenote", function() {
+$(document).on("click", "#savenote", function () {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -85,7 +102,7 @@ $(document).on("click", "#savenote", function() {
     }
   })
     // With that done
-    .then(function(data) {
+    .then(function (data) {
       // Log the response
       console.log(data);
       // Empty the notes section
@@ -96,3 +113,5 @@ $(document).on("click", "#savenote", function() {
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
+
+
