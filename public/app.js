@@ -7,6 +7,7 @@ $.getJSON("/articles", function (data) {
     $("#articlecard").append(
       "<div class='card mb-3' id='articleimage'> <img class='card-img-top' src='" + data[i].image + "'alt='Card image cap'><div class='card-body'><p data-id='" + data[i]._id + "'>" + data[i].title + "</p> <a href='" + data[i].link + "'>Check out the article here.</a><br><button href='#' class='btn btn-primary mt-3'>Save Article</button></div></div>"
     );
+      console.log(data[i]._id);
   }
 });
 
@@ -14,8 +15,9 @@ $.getJSON("/saved", function (data) {
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
     $("#savedarticlecard").append(
-      "<div class='card mb-3' id='articleimage'> <img class='card-img-top' src='" + data[i].image + "'alt='Card image cap'><div class='card-body'><p data-id='" + data[i]._id + "'>" + data[i].title + "</p> <a href='" + data[i].link + "'>Check out the article here.</a><br><button href='#' class='btn btn-primary mt-3'>Save Article</button></div></div>"
+      "<div class='card mb-3' id='articleimage'> <img class='card-img-top' src='" + data[i].image + "'alt='Card image cap'><div class='card-body'><p data-id='" + data[i].id + "'>" + data[i].title + "</p> <a href='" + data[i].link + "'>Check out the article here.</a><br><button href='#' class='btn btn-primary mt-3 mr-3 notebutton'>Add a Note</button><button href='#' class='btn btn-primary mt-3 deletebutton'>Delete</button></div></div>"
     );
+    console.log(data[i]._id);
   }
 })
 
@@ -48,24 +50,15 @@ $("#articlecard").on("click", ".btn-primary", function () {
     // Empty the notes section
     $("#notes").empty();
   });
-
-  // var image = $(this).parents("#articleimage").children("img").attr("src");
-  // var title = $(this).parents(".card-body").children("p").text();
-  // var link = $(this).parents(".card-body").children("a").attr("href");
-  // var id = $(this).parents(".card-body").children("p").attr("data-id");
-  // console.log("Save article has been clicked.");
-  // console.log(image, "image");
-  // console.log(title, "title");
-  // console.log(link, "link");
-  // console.log(id, "id");
 });
 
-// Whenever someone clicks a p tag
-$(document).on("click", "p", function () {
+// Whenever someone clicks an add a note button
+$(document).on("click", ".notebutton", function () {
   // Empty the notes from the note section
   $("#notes").empty();
-  // Save the id from the p tag
-  var thisId = $(this).attr("data-id");
+  // Save the id 
+  var thisId = $(this).parents(".card-body").children("p").attr("data-id");
+  console.log(thisId);
 
   // Now make an ajax call for the Article
   $.ajax({
@@ -122,5 +115,9 @@ $(document).on("click", "#savenote", function () {
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
+
+$(document).on("click", "#deletenote", function () {
+  
+})
 
 

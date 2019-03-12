@@ -31,8 +31,6 @@ app.use(express.static("public"));
 app.engine("handlebars", handlebars({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-app.set('views', path.join(__dirname,'/views'));  
-
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/newsdb", { useNewUrlParser: true });
 
@@ -87,7 +85,6 @@ app.get("/scrape", function(req, res) {
 });
 
 app.get("/saved", function(req, res) {
-  // res.render("savedpage");
   db.Saved.find({})
     .then(function(dbSaved) {
       res.json(dbSaved)
@@ -108,6 +105,22 @@ app.post("/saved", function(req, res) {
       res.json(err);
     });
 });
+
+app.get("/saved:id", function(req, res) {
+// Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+db.Saved.findOne({ _id: req.params.id })
+// ..and populate all of the notes associated with it
+// .remove({})
+.then(function(dbSaved) {
+  // If we were able to successfully find an Article with the given id, send it back to the client
+  res.json(dbSaved)
+  console.log(dbSaved)
+})
+.catch(function(err) {
+  // If an error occurred, send it to the client
+  res.json(err);
+});
+})
 
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {

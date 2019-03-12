@@ -1,7 +1,7 @@
 <nav class="navbar navbar-light bg-light">
     <form class="form-inline">
-        <button class="btn btn-success mr-5" type="button">Home</button>
-        <button class="btn btn-success mr-5" type="button">Saved Articles</button>
+        <button class="btn btn-success mr-5" type="button" href="/"><a href="/" class="atag">Home</a></button>
+        <button class="btn btn-success mr-5" type="button"><a href ="/savedarticles" class="atag">Saved Articles</a></button>
         <button class="btn btn-success mr-5" type="button" id="scrapebutton">Scrape Articles</button>
     </form>
 </nav>
@@ -12,7 +12,6 @@
 </div>
 <div id="wrapper">
     {{> saved }}
-    <div id="notes"></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="app.js"></script>
