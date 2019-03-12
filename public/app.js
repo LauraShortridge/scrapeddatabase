@@ -5,10 +5,19 @@ $.getJSON("/articles", function (data) {
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
     $("#articlecard").append(
-      "<div class='card' id='articleimage'> <img class='card-img-top' src='" + data[i].image + "'alt='Card image cap'><div class='card-body'><p data-id='" + data[i]._id + "'>" + data[i].title + "</p> <a href='" + data[i].link + "'>Check out the article here.</a><br><button href='#' class='btn btn-primary'>Save Article</button></div></div>"
+      "<div class='card mb-3' id='articleimage'> <img class='card-img-top' src='" + data[i].image + "'alt='Card image cap'><div class='card-body'><p data-id='" + data[i]._id + "'>" + data[i].title + "</p> <a href='" + data[i].link + "'>Check out the article here.</a><br><button href='#' class='btn btn-primary mt-3'>Save Article</button></div></div>"
     );
   }
 });
+
+$.getJSON("/saved", function (data) {
+  for (var i = 0; i < data.length; i++) {
+    // Display the apropos information on the page
+    $("#savedarticlecard").append(
+      "<div class='card mb-3' id='articleimage'> <img class='card-img-top' src='" + data[i].image + "'alt='Card image cap'><div class='card-body'><p data-id='" + data[i]._id + "'>" + data[i].title + "</p> <a href='" + data[i].link + "'>Check out the article here.</a><br><button href='#' class='btn btn-primary mt-3'>Save Article</button></div></div>"
+    );
+  }
+})
 
 $("#scrapebutton").on("click", function () {
   console.log("I have been clicked");

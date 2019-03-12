@@ -10,6 +10,15 @@
     border-color: #512941 !important;
 }
 
+.btn-primary {
+  background-color: #FD883D !important; 
+}
+
+#maintext {
+  color: white; 
+  font-weight: bold;
+}
+
 .btn-success:hover {
     background-color: #512941 !important;
 }

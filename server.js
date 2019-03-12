@@ -31,6 +31,8 @@ app.use(express.static("public"));
 app.engine("handlebars", handlebars({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+app.set('views', path.join(__dirname,'/views'));  
+
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/newsdb", { useNewUrlParser: true });
 
@@ -40,6 +42,10 @@ mongoose.connect("mongodb://localhost/newsdb", { useNewUrlParser: true });
 app.get("/", function (req, res) {
   res.render("home");
 });
+
+app.get("/savedarticles", function (req, res) {
+  res.render("savedpage");
+})
 
 
 app.get("/scrape", function(req, res) {
@@ -56,7 +62,7 @@ app.get("/scrape", function(req, res) {
       // Add the text and href of every link, and save them as properties of the result object
       result.image = $(this)
         .children("img")
-        .attr("src");
+        .attr("srcset");
       result.title = $(this)
         .attr("title");
       result.link = $(this)
@@ -81,6 +87,7 @@ app.get("/scrape", function(req, res) {
 });
 
 app.get("/saved", function(req, res) {
+  // res.render("savedpage");
   db.Saved.find({})
     .then(function(dbSaved) {
       res.json(dbSaved)
