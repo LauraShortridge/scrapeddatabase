@@ -9,13 +9,13 @@ var handlebars = require("express-handlebars");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
+// Initialize Express
+var app = express();
+
 // Require all models
 var db = require("./models");
 
 var PORT = 3000;
-
-// Initialize Express
-var app = express();
 
 // Configure middleware
 
@@ -27,12 +27,21 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
+// Set Handlebars as the default templating engine.
+app.engine("handlebars", handlebars({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/newsdb", { useNewUrlParser: true });
 
 // Routes
 
-// A GET route for scraping the echoJS website
+// A GET route for scraping 
+app.get("/", function (req, res) {
+  res.render("home");
+});
+
+
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
   axios.get("https://disneyparks.disney.go.com/blog/latest-stories/").then(function(response) {

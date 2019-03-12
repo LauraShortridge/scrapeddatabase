@@ -1,0 +1,18 @@
+<nav class="navbar navbar-light bg-light">
+    <form class="form-inline">
+        <button class="btn btn-success mr-5" type="button">Home</button>
+        <button class="btn btn-success mr-5" type="button">Saved Articles</button>
+        <button class="btn btn-success mr-5" type="button" id="scrapebutton">Scrape Articles</button>
+    </form>
+</nav>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 text-center">Disney News</h1>
+    </div>
+</div>
+<div id="wrapper">
+    {{> articles }}
+    <div id="notes"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="app.js"></script>

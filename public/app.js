@@ -1,12 +1,38 @@
 // Grab the articles as a json
+
 $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+    $("#articlecard").append(
+      "<div class='card' id='articleimage'> <img class='card-img-top' src='" + data[i].image + "'alt='Card image cap'><div class='card-body'><p data-id='" + data[i]._id + "'>" + data[i].title + "</p> <a href='" + data[i].link + "'>Check out the article here.</a><br><button href='#' class='btn btn-primary'>Save Article</button></div></div>"
+    );
   }
 });
 
+$("#scrapebutton").on("click", function() {
+  console.log("I have been clicked");
+  $.ajax({
+    method: "GET",
+    url: "/scrape"
+  })
+    .then(function(result) {
+      console.log(result);
+      location.reload();
+    })
+});
+
+$("#articlecard").on("click", ".btn-primary", function() {
+  var image = $(this).parents("#articleimage").children("img").attr("src"); 
+  var title = $(this).parents(".card-body").children("p").text();
+  var link = $(this).parents(".card-body").children("a").attr("href");
+  var id = $(this).parents(".card-body").children("p").attr("data-id");
+  console.log("Save article has been clicked.");
+  console.log(image, "image");
+  console.log(title, "title");
+  console.log(link, "link");
+  console.log(id, "id");
+})
 
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function() {
