@@ -174,6 +174,14 @@ app.post("/articles/:id", function(req, res) {
     });
 });
 
+//Add route for notes
+
+app.get("/notes/:id", function(req, res) {
+  db.Note.find({_articlid: req.params.id}).then(function(dbNote) {
+    res.json(dbNote);
+  });
+})
+
 // Start the server
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");
