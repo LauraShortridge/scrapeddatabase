@@ -100,14 +100,13 @@ $(document).on("click", "#savenote", function () {
       // Value taken from title input
       title: $("#titleinput").val(),
       // Value taken from note textarea
-      body: $("#bodyinput").val()
+      body: $("#bodyinput").val(),
+      // ID value
+      _articleId: $("#savenote").attr("data-id")
     }
   })
     // With that done
-    .then(function (data) {
-      // Log the response
-      console.log(data);
-      // Empty the notes section
+    .then(function () {
       $("#notes").empty();
     });
 
@@ -117,7 +116,7 @@ $(document).on("click", "#savenote", function () {
 });
 
 $(document).on("click", "#deletenote", function () {
-  
+
 })
 
 

@@ -177,7 +177,7 @@ app.post("/articles/:id", function(req, res) {
 //Add route for notes
 
 app.get("/notes/:id", function(req, res) {
-  db.Note.find({_articlid: req.params.id}).then(function(dbNote) {
+  db.Note.find({_articleid: req.params.id}).then(function(dbNote) {
     res.json(dbNote);
   });
 })
