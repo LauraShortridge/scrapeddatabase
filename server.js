@@ -62,7 +62,7 @@ app.get("/scrape", function(req, res) {
       // Add the text and href of every link, and save them as properties of the result object
       result.image = $(this)
         .children("img")
-        .attr("srcset");
+        .attr("src");
       result.title = $(this)
         .attr("title");
       result.link = $(this)
@@ -177,9 +177,17 @@ app.post("/articles/:id", function(req, res) {
 //Add route for notes
 
 app.get("/notes/:id", function(req, res) {
-  db.Note.find({_articleid: req.params.id}).then(function(dbNote) {
+  db.Note.find({_articleId: req.params.id, }).then(function(dbNote) {
     res.json(dbNote);
   });
+})
+
+app.post("/note", function (req, res) {
+  console.log(req.body);
+  db.Note.create(req.body)
+    .then(function(dbNote) { 
+      res.json(dbNote) 
+    });
 })
 
 // Start the server
